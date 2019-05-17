@@ -31,7 +31,12 @@ router.get('/tasks/:id', (req, res)=> {
 
 router.patch('/tasks/:id', async(req, res) => {
 	try{
-		const taskUpdate = await Task.findByIdAndUpdate(req.params.id, req.body, {new: true, runValidator:true })
+		//const taskUpdate = await Task.findByIdAndUpdate(req.params.id, req.body, {new: true, runValidator:true })
+		const taskUpdate = await Task.findById(req.params.id)
+
+		updates.forEach((update) => taskUpdate[update] = req.body[update])
+
+		await taskUpdate.save()
 		if(!taskUpdate) {
 			return res.status(400).send()		
 		}
