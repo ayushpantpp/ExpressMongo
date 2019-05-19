@@ -5,8 +5,7 @@ const Task = require('./models/task')
 const userRoute = require('./routers/user')
 const taskRoute = require('./routers/task')
 const app = express()
-const port = process.env.PORT || 3000
-
+const port = process.env.PORT
 // app.use((req, res, next) => {
 //   res.status(503).send('Site the under Mantenace')
 // })
@@ -16,5 +15,5 @@ app.use(userRoute)
 app.use(taskRoute)
 
 app.listen(port, ()=> {
-  console.log('Server is running')
+  console.log('Server is running on' + port )
 })
