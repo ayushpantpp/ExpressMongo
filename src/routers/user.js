@@ -1,3 +1,4 @@
+/* eslint-disable no-mixed-spaces-and-tabs */
 const express = require('express')
 const router = new express.Router()
 const User = require('../models/user')
@@ -31,7 +32,7 @@ router.post('/users/login', async (req, res) => {
 })
 
 //single Screen logout
- router.post('/users/logout', auth, async (req, res) => {
+router.post('/users/logout', auth, async (req, res) => {
   try {
     req.user.tokens = req.user.tokens.filter((token) => {
       return token.token !== req.token
@@ -41,7 +42,7 @@ router.post('/users/login', async (req, res) => {
   } catch (e) {
     res.status(500).send()
   }
- })
+})
 
 //All screen logout
 
@@ -53,7 +54,7 @@ router.post('/users/logoutAll', auth, async (req, res) => {
   } catch (e) {
     res.status(500).send()
   }
- })
+})
 
 router.get('/users/me', auth , async(req, res)=> {
   res.send(req.user)
@@ -84,10 +85,10 @@ router.get('/users/me', auth , async(req, res)=> {
 
 router.patch('/users/me', auth ,async (req, res) => {
   const updates = Object.keys(req.body)
-	const allowedUpdates = ['name','email','password','age']
-	const isValid = updates.every((update) => allowedUpdates.includes(update))
+  const allowedUpdates = ['name','email','password','age']
+  const isValid = updates.every((update) => allowedUpdates.includes(update))
   if(!isValid) {
-			return res.status(404).send()	
+    return res.status(404).send()	
   }
   
   try {
@@ -95,6 +96,7 @@ router.patch('/users/me', auth ,async (req, res) => {
       req.user[update] = req.body[update]
     })
     await req.user.save()
+   	// eslint-disable-next-line no-mixed-spaces-and-tabs
    	res.send(req.user)
   } catch(e) {
     return res.status(404).send()	
@@ -102,13 +104,13 @@ router.patch('/users/me', auth ,async (req, res) => {
 })
 
 router.delete('/users/me', auth, async (req, res)=> {
-	try{
+  try{
     await req.user.remove()
     sendCancelEmail(req.user.email, req.user.name)
-		res.status(200).send(req.user)
-	} catch(e) {
-		res.status(400).send(e)	
-	}
+    res.status(200).send(req.user)
+  } catch(e) {
+    res.status(400).send(e)	
+  }
 })
 
 const upload = multer({
@@ -129,6 +131,7 @@ router.post('/users/me/avatar',auth, upload.single('avatar') ,upload.single('ava
   req.user.avatar = buffer
   await req.user.save()
   res.send()
+// eslint-disable-next-line no-unused-vars
 }, (error, req, res, next)=> {
   res.status(400).send({error: error.message})
 })

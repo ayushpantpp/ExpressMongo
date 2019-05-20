@@ -17,7 +17,7 @@ const userSchema = new mongoose.Schema({
     lowercase:true,
     validate(value) {
       if(!validator.isEmail(value)) {
-          throw new Error('Age is must')
+        throw new Error('Age is must')
       }
     }
   },
@@ -84,8 +84,6 @@ userSchema.statics.findByCredential = async (email, password) => {
   if(!isValiduser) {
     throw new Error('Unable to login')
   }
-  console.log(isValiduser.password);
-  console.log(password);
   const isPasswordValid = await bcrypt.compare(password , isValiduser.password)
   if(!isPasswordValid) {
     throw new Error('Unable to login')
